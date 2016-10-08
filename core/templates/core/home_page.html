@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags core_tags %}
+
+{% block body_class %}home-body{% endblock %}
+
+{% block heading %}
+    {% include "core/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+{% endblock %}
+
+
+{% block content %}
+    {% if self.content %}
+        <div class="rich-content">
+            {{ page.content|richtext }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+	$('.carousel').carousel({
+	  interval: 1000 * 10
+	});
+</script>
+{% endblock %}

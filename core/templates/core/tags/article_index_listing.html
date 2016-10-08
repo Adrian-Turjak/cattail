@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if pages %}
+    <div class="index-list">
+        {% for page in pages %}
+            <a href="{% pageurl page %}">
+            <div class="row index-list-item">
+                {% if page.specific.index_image %}
+                    <div class="col-sm-2 index-list-item-image">
+                            {% image page.specific.index_image fill-350x250 class="img-thumbnail" %}
+                    </div>
+                {% endif %}
+                <div class="col-sm-10 index-list-item-details">                    
+                        <h3 class="list-group-item-heading">{{ page.title }}</h3>
+                        {% if page.search_description %}
+                            <p class="">{{ page.search_description }}</p>
+                        {% endif %}
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

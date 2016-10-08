@@ -1,0 +1,95 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load bootstrap3 %}
+
+{% block body_class %}litter-body{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 sire">
+            {% if self.sire.image %}
+                {% image self.sire.image fill-600x400 class="img-thumbnail" %}
+            {% else %}                        
+                <img src="http://placehold.it/600x400" width="600"
+                    height="400" alt="placeholder" class="img-thumbnail">
+            {% endif %}
+            <div class="sire-name">
+                <h3>Sire: <a href="{{ self.sire.url }}">{{ self.sire.name }}</a></h3>
+            </div>
+        </div>
+        <div class="col-sm-6 dam">            
+            {% if self.dam.image %}
+                {% image self.dam.image fill-600x400 class="img-thumbnail" %}
+            {% else %}                        
+                <img src="http://placehold.it/600x400" width="600"
+                    height="400" alt="placeholder" class="img-thumbnail">
+            {% endif %}
+            <div class="dam-name">
+                <h3>Dam: <a href="{{ self.dam.url }}">{{ self.dam.name }}</a></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="litter-extra-info">
+        <hr>
+    {% if self.extra_info %}
+        <div class="rich-content">
+            {{ self.extra_info|richtext }}
+        </div>
+    {% endif %}    
+    </div>
+    {% if self.date_of_birth %}
+    <div class="litter-birth-date">
+        <h4>Date of birth: {{ self.date_of_birth }}</h4>
+        <hr>
+    </div>
+    {% endif %}
+
+    {% if self.juveniles %}
+    <div class="juveniles-list">
+        <h3>Juveniles</h3>
+        <hr>    
+        {% for juvenile in self.juveniles.all %}
+            <div class="row juvenile">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-6 juvenile-image">
+                    {% if juvenile.image %}
+                        {% image juvenile.image fill-600x400 class="img-thumbnail" %}
+                    {% else %}                        
+                        <img src="http://placehold.it/600x400" width="600"
+                            height="400" alt="placeholder" class="img-thumbnail">
+                    {% endif %}
+                </div>
+                <div class="col-sm-4 juvenile-details">
+                    <dt>Name</dt>
+                    {% if juvenile.detail_page %}
+                    <dd><a href="{{ juvenile.detail_page.url }}">{{ juvenile.name }}</a></dd>
+                    {% else %}
+                    <dd>{{ juvenile.name }}</dd>
+                    {% endif %}                    
+                    <dt>Sex</dt>
+                    <dd>{{ juvenile.sex }}</dd>
+                    <dt>Colouring</dt>
+                    <dd>{{ juvenile.colouring }}</dd>
+                    <dt>Birth Weight</dt>
+                    <dd>{{ juvenile.birth_weight }}g</dd>
+                    <dt>Status</dt>
+                    <dd>{{ juvenile.status }}</dd>
+
+                    {% if juvenile.extra_info %}
+                     <hr>
+                        <div class="juvenile-info">
+                            {{ juvenile.extra_info|richtext }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+         {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="page-header"></div>
+        <div class="col-sm-4"></div>
+        {% include "core/includes/related_links_no_row.html" with related_links=self.related_links.all only %}
+    </div>
+{% endblock %}

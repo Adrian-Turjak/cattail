@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}detail-body{% endblock %}
+
+{% block content %}
+    <div class="detail-content">
+        <div class="row">
+            <div class="col-sm-8 detail-picture">
+                {% if self.image %}
+                    {% image self.image fill-900x600 class="img-thumbnail" %}
+                {% else %}
+                    <img src="http://placehold.it/900x600" width="900"
+                        height="600" alt="placeholder" class="img-thumbnail">
+                {% endif %}
+            </div>
+            <div class="col-sm-4 details-list">
+                <div class="details">
+                    <dt>Name</dt>
+                    <dd>{{ self.name }}</dd>                
+                    <dt>Breed</dt>
+                    <dd>{{ self.breed }}</dd>
+                    <dt>Sex</dt>
+                    <dd>{{ self.sex }}</dd>
+                    <dt>Colour</dt>
+                    <dd>{{ self.colour }}</dd>
+                    <dt>Date of birth</dt>
+                    <dd>{{ self.date_of_birth }}</dd>
+                    {% if self.sire %}
+                    <dt>Sire</dt>
+                        {% if self.sire.link %}
+                            <dd><a href="{{ self.sire.link }}">{{ self.sire.name }}</a></dd>
+                        {% else %}
+                            <dd>{{ self.sire.name }}</dd>
+                        {% endif %}
+                    {% endif %}
+                    {% if self.dam %}
+                    <dt>Dam</dt>
+                        {% if self.dam.link %}
+                            <dd><a href="{{ self.dam.link }}">{{ self.dam.name }}</a></dd>
+                        {% else %}
+                            <dd>{{ self.dam.name }}</dd>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% if self.pedigree and self.pedigree.link %}             
+                <div class="pedigree">
+                    <hr>
+                    <dt><a href="{{ self.pedigree.link }}">Pedigree</a></dt>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if self.extra_info %}
+        <hr>
+            <div class="detail-extra_info">
+                {{ self.extra_info|richtext }}
+            </div>
+        {% endif %}
+        <div class="row detail-related">
+            <div class="page-header"></div>
+            <div class="col-sm-4"></div>
+            {% include "core/includes/litters_dam.html" with litters_dam=self.litters_dam.all only %}
+            {% include "core/includes/litters_sire.html" with litters_sire=self.litters_sire.all only %}
+            {% include "core/includes/related_links_no_row.html" with related_links=self.related_links.all only %}
+        </div>
+    </div>
+{% endblock %}

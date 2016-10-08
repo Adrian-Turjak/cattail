@@ -1,0 +1,33 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if pages %}
+    <div class="index-list">
+        {% for page in pages %}
+            <a href="{% pageurl page %}">
+            <div class="row index-list-item">
+                <div class="col-sm-6 index-list-item-image">
+                {% if page.specific.image %}
+                    {% image page.specific.image fill-500x300 class="img-thumbnail" %}
+                {% elif page.specific.index_image %}
+                    {% image page.specific.index_image fill-500x300 class="img-thumbnail" %}
+                {% else %}
+                    <img src="http://placehold.it/500x300" width="500"
+                        height="300" alt="placeholder" class="img-thumbnail">
+                {% endif %}
+                </div>
+                <div class="col-sm-6 index-list-item-details">                    
+                        <dt>Name</dt>
+                        <dd>{{ page.specific.name }}</dd>
+                        <dt>Sex:</dt>
+                        <dd>{{ page.specific.sex }}</dd>
+                        <dt>Breed:</dt>
+                        <dd>{{ page.specific.breed }}</dd>
+                        {% if page.search_description %}
+                            <hr>
+                            <p class="">{{ page.search_description }}</p>
+                        {% endif %}
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

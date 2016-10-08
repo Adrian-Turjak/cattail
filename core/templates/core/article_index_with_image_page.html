@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags core_tags wagtailimages_tags %}
+
+{% block body_class %}index-body{% endblock %}
+
+{% block content %}
+	<div class="index-content">
+	    <div class="index-image row">
+	        <div class="col-sm-2"></div>
+	    	<div class="col-sm-8">
+		    {% if self.image %}
+		        {% image self.image fill-900x500 class="img-thumbnail" %}
+		    {% else %}
+	            <img src="http://placehold.it/900x600" width="900"
+	                height="600" alt="placeholder" class="img-thumbnail">
+	        {% endif %}
+	        </div>
+	        <div class="col-sm-2"></div>
+	    </div>
+		
+	    {% include "core/includes/intro.html" with intro=self.intro only %}
+
+	    {% article_index_listing calling_page=self %}
+
+	    {% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+    </div>
+{% endblock %}

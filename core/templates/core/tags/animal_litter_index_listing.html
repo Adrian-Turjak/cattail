@@ -1,0 +1,52 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if pages %}
+    <div class="index-list litter-list">
+        {% for page in pages %}
+            <a href="{% pageurl page %}">
+            <div class="index-list-litter-item">
+                <div class="row index-list-item">
+                    <div class="col-sm-6 index-list-item-image">
+                    {% if page.specific.sire.image %}
+                        {% image page.specific.sire.image fill-400x250 class="img-thumbnail" %}
+                    {% elif page.specific.sire.index_image %}
+                        {% image page.specific.sire.index_image fill-400x250 class="img-thumbnail" %}
+                    {% else %}
+                        <img src="http://placehold.it/400x250" width="400"
+                            height="250" alt="placeholder" class="img-thumbnail">
+                    {% endif %}
+                        <div class="sire-name">
+                            <h4>Sire: {{ page.specific.sire.name }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 index-list-item-image">                    
+                    {% if page.specific.dam.image %}
+                        {% image page.specific.dam.image fill-400x250 class="img-thumbnail" %}
+                    {% elif page.specific.dam.index_image %}
+                        {% image page.specific.dam.index_image fill-400x250 class="img-thumbnail" %}
+                    {% else %}
+                        <img src="http://placehold.it/400x250" width="400"
+                            height="250" alt="placeholder" class="img-thumbnail">
+                    {% endif %}
+                        <div class="dam-name">
+                            <h4>Dam: {{ page.specific.dam.name }}</h4>
+                        </div>        
+                    </div>
+                </div>
+                <div class="index-list-item-details">
+                    {% if page.specific.date_of_birth or page.search_description %}
+                    <hr>
+                    {% endif %}
+                    {% if page.specific.date_of_birth %}
+                    <div class="litter-list-birth-date">
+                        <dt>Date of birth: {{ page.specific.date_of_birth }}</dt>
+                    </div>
+                    {% endif %}                   
+                    {% if page.search_description %}
+                        <p class="">{{ page.search_description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

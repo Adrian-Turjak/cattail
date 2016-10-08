@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}search-results-body{% endblock %}
+
+{% block title %}Search{% endblock %}
+
+{% block heading %}
+    <div class="page-header">
+        <h1>Search results</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="search-form">
+        <form action="{% url 'search' %}" method="get" class="form">
+            <label class="control-label" for="search">search</label>
+            <div class="row">
+                <div class="form-group col-sm-10">
+                    <input class="form-control" id="search" maxlength="255" name="query" type="text" {% if search_query %} value="{{ search_query }}"{% endif %}>
+                </div>
+                <div class="form-group col-sm-2">
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span> Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if search_results %}
+        <div class="search-count">
+            {% if search_results|length > 1 %}
+                <p>{{ search_results|length }} results found</p>            
+            {% else %}
+                <p>1 result found</p>
+            {% endif %}
+        </div>
+        <hr>
+        <div class="search-list">
+            {% for result in search_results %}
+                <a href="{% pageurl result %}">
+                <div class="row search-list-item">
+                    {% if result.specific.index_image %}
+                        <div class="col-sm-2 search-list-item-image">
+                                {% image result.specific.index_image fill-350x250 class="img-thumbnail" %}
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-10 search-list-item-details">                    
+                            <h3 class="list-group-item-heading">{{ result.title }}</h3>
+                            {% if result.search_description %}
+                                <p class="">{{ result.search_description }}</p>
+                            {% endif %}
+                    </div>
+                </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="search-count">
+            <p>No results found</p>            
+        </div>
+    {% endif %}
+{% endblock %}

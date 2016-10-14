@@ -39,9 +39,3 @@ RECAPTCHA_PRIVATE_KEY = ""
 
 RECAPTCHA_USE_SSL = True
 NOCAPTCHA = True
-
-
-try:
-    from .local import *
-except ImportError:
-    pass

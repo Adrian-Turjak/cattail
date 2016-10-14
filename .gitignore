@@ -94,3 +94,6 @@ static/CACHE/
 media/
 
 *.sqlite3
+
+
+production.py

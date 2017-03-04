@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailforms.edit_handlers import FormSubmissionsPanel
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, MultiFieldPanel, FieldRowPanel,
     InlinePanel, PageChooserPanel)
@@ -208,9 +209,11 @@ class ArticleIndexWithImagePage(ArticleIndexPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    show_placeholder = models.BooleanField()
 
     content_panels = ArticleIndexPage.content_panels + [
         ImageChooserPanel('image'),
+        FieldPanel('show_placeholder', classname="Show placeholder image."),
     ]
 
 
@@ -355,6 +358,20 @@ class AnimalDetailPage(Page):
     def pedigree(self):
         return self.pedigree_link.all().first()
 
+    @property
+    def litters(self):
+        litters = []
+        now_date = now().date()
+        if self.sex == "Male":
+            for litter in self.litters_sire.all():
+                if litter.date_of_birth and litter.date_of_birth <= now_date:
+                    litters.append(litter)
+        elif self.sex == "Female":
+            for litter in self.litters_dam.all():
+                if litter.date_of_birth and litter.date_of_birth <= now_date:
+                    litters.append(litter)
+        return litters
+
     content_panels = [
         FieldPanel('title', classname="full title"),
         ImageChooserPanel('image'),
@@ -433,7 +450,7 @@ class Juvenile(models.Model):
 class AnimalLitterPedigreeLink(LinkFields):
     page = ParentalKey(
         'core.AnimalLitterPage',
-        related_name='pedigree',
+        related_name='pedigree_link',
         unique=True
     )
 
@@ -474,12 +491,16 @@ class AnimalLitterPage(Page):
         index.SearchField('extra_info'),
     ]
 
+    @property
+    def pedigree(self):
+        return self.pedigree_link.all().first()
+
     content_panels = [
         FieldPanel('title', classname="full title"),
         PageChooserPanel('sire'),
         PageChooserPanel('dam'),
         FieldPanel('date_of_birth'),
-        InlinePanel('pedigree', label="Pedigree"),
+        InlinePanel('pedigree_link', label="Pedigree"),
         FieldPanel('extra_info', classname="full"),
         InlinePanel('juveniles', label="Juveniles"),
         InlinePanel('related_links', label="Related links"),
@@ -501,6 +522,7 @@ class FormPage(WagtailCaptchaEmailForm):
     thank_you_text = RichTextField(blank=True)
 
     content_panels = [
+        FormSubmissionsPanel(),
         FieldPanel('title', classname="full title"),
         FieldPanel('intro', classname="full"),
         InlinePanel('form_fields', label="Form fields"),

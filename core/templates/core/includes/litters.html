@@ -1,12 +1,12 @@
-{% if litters_dam %}
+{% if litters %}
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Litters dam:</h3>
+                <h3 class="panel-title">Litters:</h3>
             </div>
             <div class="panel-body">
                 <ul>
-                {% for litter in litters_dam %}
+                {% for litter in litters %}
                     <li><a href="{{ litter.url }}">{{ litter.title }}</a></li>
                 {% endfor %}
                 </ul>

@@ -17,7 +17,7 @@
             <div class="col-sm-4 details-list">
                 <div class="details">
                     <dt>Name</dt>
-                    <dd>{{ self.name }}</dd>                
+                    <dd>{{ self.name }}</dd>
                     <dt>Breed</dt>
                     <dd>{{ self.breed }}</dd>
                     <dt>Sex</dt>
@@ -43,7 +43,7 @@
                         {% endif %}
                     {% endif %}
                 </div>
-                {% if self.pedigree and self.pedigree.link %}             
+                {% if self.pedigree and self.pedigree.link %}
                 <div class="pedigree">
                     <hr>
                     <dt><a href="{{ self.pedigree.link }}">Pedigree</a></dt>
@@ -60,8 +60,7 @@
         <div class="row detail-related">
             <div class="page-header"></div>
             <div class="col-sm-4"></div>
-            {% include "core/includes/litters_dam.html" with litters_dam=self.litters_dam.all only %}
-            {% include "core/includes/litters_sire.html" with litters_sire=self.litters_sire.all only %}
+            {% include "core/includes/litters.html" with litters=self.litters only %}
             {% include "core/includes/related_links_no_row.html" with related_links=self.related_links.all only %}
         </div>
     </div>

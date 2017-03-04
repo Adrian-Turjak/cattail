@@ -10,14 +10,14 @@
 	    	<div class="col-sm-8">
 		    {% if self.image %}
 		        {% image self.image fill-900x600 class="img-thumbnail" %}
-		    {% else %}
+		    {% elif self.show_placeholder %}
 	            <img src="http://placehold.it/900x600" width="900"
 	                height="600" alt="placeholder" class="img-thumbnail">
 	        {% endif %}
 	        </div>
 	        <div class="col-sm-2"></div>
 	    </div>
-		
+
 	    {% include "core/includes/intro.html" with intro=self.intro only %}
 
 	    {% animal_detail_index_listing calling_page=self %}

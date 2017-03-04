@@ -9,7 +9,7 @@
         <div class="col-sm-6 sire">
             {% if self.sire.image %}
                 {% image self.sire.image fill-600x400 class="img-thumbnail" %}
-            {% else %}                        
+            {% else %}
                 <img src="http://placehold.it/600x400" width="600"
                     height="400" alt="placeholder" class="img-thumbnail">
             {% endif %}
@@ -17,10 +17,10 @@
                 <h3>Sire: <a href="{{ self.sire.url }}">{{ self.sire.name }}</a></h3>
             </div>
         </div>
-        <div class="col-sm-6 dam">            
+        <div class="col-sm-6 dam">
             {% if self.dam.image %}
                 {% image self.dam.image fill-600x400 class="img-thumbnail" %}
-            {% else %}                        
+            {% else %}
                 <img src="http://placehold.it/600x400" width="600"
                     height="400" alt="placeholder" class="img-thumbnail">
             {% endif %}
@@ -36,7 +36,7 @@
         <div class="rich-content">
             {{ self.extra_info|richtext }}
         </div>
-    {% endif %}    
+    {% endif %}
     </div>
     {% if self.date_of_birth %}
     <div class="litter-birth-date">
@@ -45,17 +45,24 @@
     </div>
     {% endif %}
 
-    {% if self.juveniles %}
+    {% if self.pedigree and self.pedigree.link %}
+    <div class="litter-pedigree">
+        <h5><a href="{{ self.pedigree.link }}">Pedigree</a></h5>
+        <hr>
+    </div>
+    {% endif %}
+
+    {% if self.juveniles.all %}
     <div class="juveniles-list">
         <h3>Juveniles</h3>
-        <hr>    
+        <hr>
         {% for juvenile in self.juveniles.all %}
             <div class="row juvenile">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6 juvenile-image">
                     {% if juvenile.image %}
                         {% image juvenile.image fill-600x400 class="img-thumbnail" %}
-                    {% else %}                        
+                    {% else %}
                         <img src="http://placehold.it/600x400" width="600"
                             height="400" alt="placeholder" class="img-thumbnail">
                     {% endif %}
@@ -66,7 +73,7 @@
                     <dd><a href="{{ juvenile.detail_page.url }}">{{ juvenile.name }}</a></dd>
                     {% else %}
                     <dd>{{ juvenile.name }}</dd>
-                    {% endif %}                    
+                    {% endif %}
                     <dt>Sex</dt>
                     <dd>{{ juvenile.sex }}</dd>
                     <dt>Colour</dt>

@@ -199,6 +199,20 @@ class ArticleIndexPage(Page):
     ]
 
 
+class NewsArticleIndexPage(ArticleIndexPage):
+    news_list_style = models.CharField(max_length=255, choices=(
+        ('title_intro_link', 'Articles with title and intro with link.'),
+        ('full_no_link', 'Full articles with no link.')))
+
+    subpage_types = ['NewsArticlePage']
+
+    # NOTE(adriant): Using odd array slicing to stick this right after
+    # the title field.
+    content_panels = ArticleIndexPage.content_panels[0:1] + [
+        FieldPanel('news_list_style', classname="News list style."),
+    ] + ArticleIndexPage.content_panels[1:]
+
+
 # Article index with image page
 
 class ArticleIndexWithImagePage(ArticleIndexPage):
@@ -253,6 +267,16 @@ class ArticlePage(Page):
     promote_panels = Page.promote_panels + [
         ImageChooserPanel('index_image'),
     ]
+
+
+class NewsArticlePage(ArticlePage):
+    date = models.DateTimeField(default=now)
+
+    # NOTE(adriant): Using odd array slicing to stick this right after
+    # the title field.
+    content_panels = ArticlePage.content_panels[0:1] + [
+        FieldPanel('date', classname="Date"),
+    ] + ArticlePage.content_panels[1:]
 
 
 # Animal Detail Index Page

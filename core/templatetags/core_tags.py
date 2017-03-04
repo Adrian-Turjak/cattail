@@ -65,6 +65,22 @@ def article_index_listing(context, calling_page):
     }
 
 
+# Retrieves all live pages. which are children of the calling page
+# for standard index listing
+@register.inclusion_tag(
+    'core/tags/news_article_index_listing.html',
+    takes_context=True
+)
+def news_article_index_listing(context, calling_page):
+    pages = calling_page.get_children().live()
+    return {
+        'pages': pages,
+        'news_list_style': calling_page.news_list_style,
+        # required by the pageurl tag that we want to use within this template
+        'request': context['request'],
+    }
+
+
 @register.inclusion_tag(
     'core/tags/animal_detail_index_listing.html',
     takes_context=True

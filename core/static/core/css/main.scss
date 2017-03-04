@@ -131,7 +131,7 @@ body {
             text-decoration: none;
         }
 
-        .index-list-item {
+        .index-list-item, .news-list-item, .news-list-item-no-link {
             border-radius: 4px;
             background-color: $base-gray;
             border: 1px solid $base-gray-border;
@@ -144,11 +144,11 @@ body {
                 padding: 0px;
             }
 
-            .index-list-item-details {
+            .index-list-item-details, .news-list-item-details  {
                 padding-top: 5px;
                 padding-bottom: 5px;
 
-                dt, dd, p, h3 {
+                dt, dd, p, h3, h4 {
                     color: $text-gray;
                 }
 
@@ -157,7 +157,33 @@ body {
                     margin-top: 7px;
                     margin-bottom: 7px;
                 }
+
             }
+        }
+
+        .news-list-item, .news-list-item-no-link {
+
+            .news-list-item-details  {
+
+                h3 {
+                  margin-bottom: 10px;
+                }
+
+                dt {
+                  font-size: 10px;
+                }
+
+                .news-list-item-intro {
+                  margin-top: 10px;
+                  font-size: 12px;
+                }
+
+                .news-list-item-body {
+                  margin-top: 10px;
+                  font-size: 15px;
+                }
+            }
+
         }
 
         .index-list-item:hover {
@@ -208,8 +234,6 @@ body {
             dt, dd, p {
                 color: $text-gray;
             }
-
-
 
             hr {
                 border-top: 1px solid $text-gray;

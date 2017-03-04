@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}article-body{% endblock %}
+
+{% block content %}
+    {% include "core/includes/intro.html" with intro=self.intro only %}
+
+    {% if self.body %}
+        <div class="rich-content">
+            {{ self.body|richtext }}
+        </div>
+    {% endif %}
+
+    {% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}

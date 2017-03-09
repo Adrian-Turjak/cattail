@@ -13,10 +13,10 @@
             </button>
             {# Link to home page #}
             <a href="{% pageurl site_root %}" class="navbar-brand" title="{{ site_root.title }}" data-placement="bottom">
-                <i class="glyphicon glyphicon-home"></i>
+                <div class="menu-site-name">{{ calling_page.get_site.site_name }}</div>
             </a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse sub-menu-nav">
             <ul class="nav navbar-nav">
                 {% for menuitem in menuitems %}
                     <li class="{% if menuitem.show_dropdown %}dropdown{% endif %}{% if menuitem.active %} active{% endif %}">
@@ -26,7 +26,7 @@
                         {% else %}
                             <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
                         {% endif %}
-                    </li>       
+                    </li>
                 {% endfor %}
             </ul>
             <form class="navbar-form navbar-right" role="search" action="{% url 'search' %}" method="get">

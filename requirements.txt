@@ -5,6 +5,7 @@ django-libsass>=0.7
 django-modelcluster>=3.0
 django-overextends>=0.4.2
 django-storages>=1.5.2
+boto3>=1.4.4
 elasticsearch>=1.2.0
 libsass>=0.8.2
 Pillow>=3.2.0

@@ -1,9 +1,10 @@
-Django>=1.10,<1.11
+Django>=1.11,<1.12
 wagtail>=1.9
 django-bootstrap3>=7.1.0
 django-libsass>=0.7
 django-modelcluster>=3.0
 django-overextends>=0.4.2
+django-storages>=1.5.2
 elasticsearch>=1.2.0
 libsass>=0.8.2
 Pillow>=3.2.0

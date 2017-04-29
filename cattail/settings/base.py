@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'captcha',
     'wagtailcaptcha',
     'bootstrap3',
+    'storages',
 
     'django.contrib.admin',
     'django.contrib.auth',
